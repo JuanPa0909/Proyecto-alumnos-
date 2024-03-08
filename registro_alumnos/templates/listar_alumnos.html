@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Alumnos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        li:hover {
+            background-color: #f0f0f0;
+        }
+        .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .links a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .links a.edit {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .links a.delete {
+            background-color: #f44336;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Listado de Alumnos</h1>
+        <ul>
+            {% for alumno in alumnos %}
+                <li>
+                    {{ alumno.nombres }} {{ alumno.apellidos }}
+                    <div class="links">
+                        <a href="{% url 'editar_alumno' id=alumno.id %}" class="edit">Editar</a>
+                        <a href="#" class="delete" onclick="confirmarEliminacion({{ alumno.id }})">Eliminar</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="links">
+            <a href="{% url 'agregar_alumno' %}" class="edit">Agregar Alumno</a>
+            <a href="{% url 'estadisticas_alumnos' %}" class="edit">Estadísticas de Alumnos</a>
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar mensaje de confirmación antes de eliminar
+        function confirmarEliminacion(alumnoId) {
+            if (confirm("¿Estás seguro de que deseas eliminar este alumno?")) {
+                window.location.href = "{% url 'eliminar_alumno' id=0 %}".replace('0', alumnoId);
+            }
+        }
+    </script>
+</body>
+</html>
